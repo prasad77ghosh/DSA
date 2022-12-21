@@ -1,5 +1,6 @@
 package Recursion;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class DisplayArray {
@@ -17,10 +18,8 @@ public class DisplayArray {
       // prArrayReverse(arr, 0);
       // int max = maxOfAnArray(arr, 0);
       // System.out.println(max);
-      int ans = firstIndex(arr, 0, 4);
-
-      System.out.println(ans);
-
+      int[] ans = allIdexes(arr, 0, 4, 0);
+      System.out.println(Arrays.toString(ans));
 
     }
 
@@ -63,5 +62,46 @@ public class DisplayArray {
     }else{
       return firstIndex(arr, idx+1, target);
     }
+  }
+
+  public static int lastIndex(int[] arr, int idx, int target){
+    if(idx == arr.length){
+      return -1;
+    }
+    int subAns = lastIndex(arr, idx+1, target);
+
+    if(subAns == -1){
+      if(arr[idx] == target){
+        return idx;
+      }else{
+        return -1;
+      }
+    }else{
+      return subAns;
+    }
+
+  }
+
+  public static int[] allIdexes(int[] arr, int idx, int target, int fsf){
+
+    // fsf = found so far
+
+    if(idx == arr.length && fsf > 0){
+      return new int[fsf];
+    }
+
+    if(idx == arr.length && fsf == 0){
+      return new int[0];
+    }
+
+    if(arr[idx] == target){
+      int[] iarr = allIdexes(arr, idx+1, target, fsf + 1);
+      iarr[fsf] = idx;
+      return iarr;
+    }else{
+      int[] iarr = allIdexes(arr, idx+1, target, fsf);
+      return iarr;
+    }
+
   }
 }
